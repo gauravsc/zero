@@ -23,7 +23,6 @@ def prepare_test_data(test_classes):
 	return test_data
 
 
-
 def train_model(train_data):	
 	model=Model()
 	model.train(train_data)
