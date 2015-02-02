@@ -17,8 +17,6 @@ def get_data_from_mat_file(filename):
 
 	return mat
 
-
-
 def get_labels_from_mat_file(filename):
 	m2=[]
 	mat_data=scipy.io.loadmat(filename)
@@ -26,13 +24,8 @@ def get_labels_from_mat_file(filename):
 		m2.append([mat_data['info'][0][i][2][0]])
 	return m2
 
-
-
-
 m1=get_data_from_mat_file(input_filename)
 m2=get_labels_from_mat_file(input_filename)
-
-
 csvfile=open(output_filename, 'w')
 header=["c"+str(i) for i in xrange(len(list(np.asarray(m1)[0])))]+["class"]
 csvwriter = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)

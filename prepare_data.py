@@ -1,6 +1,6 @@
 import pandas as pd
 import random 
-
+import model
 data=pd.read_csv('fMRI_data/data-science-P1.csv')
 
 
@@ -24,12 +24,23 @@ def prepare_test_data(test_classes):
 
 
 def train_model(train_data):	
-	model=Model()
-	model.train(train_data)
-	return model
+	model_train=model.Model()
+	model_train.train(train_data)
+	return model_train
+
+def get_accuracy(a1, a2):
+	cnt=0
+	for i in xrange(len(a1)):
+		print a1[i],":", a2[i]
+		if a1[i].strip()==a2[i].strip():
+			cnt+=1
+	return cnt/len(a1)
 
 def evaluate_model(model, test_data):
-
+	true_classes=test_data['class'].values
+	X=test_data[[col for col in test_data.columns if col not in ["class"]]].values
+	predicted_labels=model.predict(X)
+	print "Accuracy: ", get_accuracy(predicted_labels, true_classes)
 
 
 def main():
@@ -37,6 +48,6 @@ def main():
 	train_data=prepare_train_data(test_classes)
 	test_data=prepare_test_data(test_classes)
 	model=train_model(train_data)
-	results=evaluate_model(model, test_data)
-	print results
+	evaluate_model(model, test_data)
 
+main()
