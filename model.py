@@ -9,7 +9,7 @@ class Model(object):
 	def __init__(self):
 		#load label vectors
 		self.load_label_vectors()
-		self.num_iter=80
+		self.num_iter=150
 		
 	def load_label_vectors(self):
 		fread=open('fMRI_data/wordvectors.txt','r')
