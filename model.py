@@ -9,7 +9,7 @@ class Model(object):
 	def __init__(self):
 		#load label vectors
 		self.load_label_vectors()
-		self.num_iter=40
+		self.num_iter=80
 		
 	def load_label_vectors(self):
 		fread=open('fMRI_data/wordvectors.txt','r')
@@ -42,12 +42,15 @@ class Model(object):
 		self.W=np.random.rand(xcol, lcol)		
 		for iteration in xrange(self.num_iter):
 			if iteration > 0 and iteration % 15 ==0:
-				self.alpha=self.alpha/3
+				self.alpha=self.alpha/1.2
 			print "iteration: ", iteration
 			i,j=random.sample(xrange(xrow), 2)
 			gradient=2*np.transpose(X[i])*X[i]*self.W \
 			-4*np.transpose(X[j])*X[i]*self.W + 2*np.transpose(X[j])*X[j]*self.W \
-			+ 2*np.transpose(X[i])*(L[j]-L[i]) + 2*np.transpose(X[j])*(L[i]-L[j])
+			+ 2*np.transpose(X[i])*(L[j]-L[i]) + 2*np.transpose(X[j])*(L[i]-L[j]) \
+			+ 2*np.transpose(X[i])*X[i]*self.W + 4*np.transpose(X[j])*X[i]*self.W \
+			- 2*np.transpose(X[i])*(L[i]+L[j]) - 2*np.transpose(X[j])*(L[i]+L[j]) \
+			+ 2* np.transpose(X[j])*X[j]*self.W
 			self.W=self.W-self.alpha*gradient
 			# print self.W
 			if iteration %5 == 0:

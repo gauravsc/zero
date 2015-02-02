@@ -30,6 +30,7 @@ def train_model(train_data):
 
 def get_accuracy(a1, a2):
 	cnt=0
+	print "predicted : True"
 	for i in xrange(len(a1)):
 		print a1[i],":", a2[i]
 		if a1[i].strip()==a2[i].strip():
@@ -40,7 +41,8 @@ def evaluate_model(model, test_data):
 	true_classes=test_data['class'].values
 	X=test_data[[col for col in test_data.columns if col not in ["class"]]].values
 	predicted_labels=model.predict(X)
-	print "Accuracy: ", get_accuracy(predicted_labels, true_classes)
+	accuracy=get_accuracy(predicted_labels, true_classes)
+	print "Accuracy: ", accuracy
 
 
 def main():
